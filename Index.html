@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anvit Kulkarni — RPA & Automation Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--surface:#141720;--surface2:#1c2030;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.16);
+  --accent:#4fc9a4;--accent2:#7b8cff;--accent3:#ff7b7b;--accent4:#f5a623;
+  --text:#e8eaf2;--muted:#7a7f9a;
+  --heading:'DM Serif Display',serif;--body:'Sora',sans-serif;--mono:'DM Mono',monospace;
+  --nav-h:60px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--text);font-size:15px;line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;position:relative;z-index:1}
+.page.active{display:block}
+
+/* ═══ NAV ═══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;
+  background:rgba(13,15,20,0.9);backdrop-filter:blur(16px);
+  border-bottom:.5px solid var(--border);
+}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;flex-shrink:0}
+.logo-mark svg{width:36px;height:36px;display:block}
+.logo-text{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em;line-height:1.3}
+.logo-text strong{display:block;color:var(--text);font-size:13px;letter-spacing:.05em}
+
+/* Desktop nav */
+.nav-links{display:flex;align-items:center;gap:.25rem}
+.nav-links button{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+  padding:6px 14px;border-radius:4px;letter-spacing:.06em;
+  transition:color .2s,background .2s;white-space:nowrap;
+}
+.nav-links button:hover{color:var(--text);background:var(--surface2)}
+.nav-links button.active{color:var(--accent)}
+.nav-cta{
+  border:.5px solid var(--accent)!important;color:var(--accent)!important;
+  margin-left:.75rem;transition:background .2s,color .2s!important;
+}
+.nav-cta:hover{background:var(--accent)!important;color:#0d0f14!important}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:36px;height:36px;background:none;border:none;cursor:pointer;padding:4px;border-radius:6px}
+.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;
+  transition:transform .25s,opacity .25s,width .25s}
+.hamburger span:nth-child(1){width:22px}
+.hamburger span:nth-child(2){width:16px}
+.hamburger span:nth-child(3){width:22px}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);width:22px}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);width:22px}
+
+/* Mobile drawer */
+.mobile-nav{
+  display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:199;
+  background:rgba(13,15,20,0.98);backdrop-filter:blur(16px);
+  border-bottom:.5px solid var(--border);
+  flex-direction:column;padding:1rem 1.5rem;gap:.5rem;
+}
+.mobile-nav.open{display:flex}
+.mobile-nav button{
+  background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:14px;
+  color:var(--muted);padding:10px 0;text-align:left;letter-spacing:.06em;
+  border-bottom:.5px solid var(--border);transition:color .2s;
+}
+.mobile-nav button:last-child{border-bottom:none}
+.mobile-nav button.active{color:var(--accent)}
+.mobile-nav button.m-cta{color:var(--accent);margin-top:.5rem}
+
+/* ═══ PAGE CONTENT ═══ */
+.page-content{
+  padding-top:var(--nav-h);max-width:960px;
+  margin:0 auto;padding-left:3rem;padding-right:3rem;
+}
+
+/* ── section tag ── */
+.sec-tag{
+  font-family:var(--mono);font-size:11px;color:var(--accent);
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.sec-tag::after{content:'';flex:1;height:.5px;background:linear-gradient(to right,var(--border2),transparent)}
+
+h1{font-family:var(--heading);font-weight:400;font-size:clamp(2.8rem,10vw,6rem);
+  line-height:1.03;letter-spacing:-.02em;color:var(--text)}
+h1 em{font-style:italic;color:var(--accent)}
+h2{font-family:var(--heading);font-weight:400;font-size:clamp(1.8rem,5vw,3rem);
+  line-height:1.1;color:var(--text);margin-bottom:2rem}
+
+/* ── buttons ── */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.08em;
+  padding:10px 22px;border-radius:4px;border:.5px solid var(--accent);
+  color:var(--accent);background:transparent;cursor:pointer;text-decoration:none;
+  transition:background .2s,color .2s;white-space:nowrap;
+}
+.btn:hover{background:var(--accent);color:#0d0f14}
+.btn-ghost{border-color:var(--border2);color:var(--muted)}
+.btn-ghost:hover{background:var(--surface2);color:var(--text)}
+.btn-sm{padding:6px 14px;font-size:11px}
+
+/* ═══════════════════════════════════════
+   PAGE 1 — HOME
+═══════════════════════════════════════ */
+.hero{
+  min-height:calc(100vh - var(--nav-h));
+  display:flex;flex-direction:column;justify-content:center;
+  padding-top:4rem;padding-bottom:4rem;position:relative;
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:.75rem;
+  font-family:var(--mono);font-size:12px;color:var(--accent);
+  letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.75rem;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--accent)}
+.hero-name{margin-bottom:1.5rem}
+.hero-sub{font-size:clamp(14px,2.5vw,18px);color:var(--muted);max-width:540px;
+  font-weight:300;line-height:1.85;margin-bottom:2.5rem}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
+
+/* Stats bar */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  width:100%;max-width:480px;
+  border:.5px solid var(--border2);border-radius:8px;overflow:hidden;
+}
+.stat{padding:1rem 1.25rem;border-right:.5px solid var(--border);background:var(--surface);min-width:0}
+.stat:last-child{border-right:none}
+.stat-num{font-family:var(--heading);font-size:clamp(1.5rem,4vw,2.2rem);color:var(--text);line-height:1}
+.stat-label{font-family:var(--mono);font-size:9px;color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+
+/* Decorative circle — hidden on mobile */
+.hero-shape{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(79,201,164,.06) 0%,transparent 70%);
+  border:.5px solid rgba(79,201,164,.12);pointer-events:none;
+}
+.hero-shape-inner{position:absolute;inset:40px;border-radius:50%;border:.5px solid rgba(79,201,164,.08)}
+.hero-shape-inner2{
+  position:absolute;inset:80px;border-radius:50%;
+  border:.5px solid rgba(79,201,164,.06);
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-initials{font-family:var(--heading);font-size:3rem;color:rgba(79,201,164,.2);font-style:italic}
+
+/* About strip */
+.about-strip{
+  display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+  padding:4rem 0;border-top:.5px solid var(--border);
+}
+.about-block h3{font-family:var(--heading);font-size:1.5rem;font-weight:400;
+  color:var(--text);margin-bottom:.75rem}
+.about-block p{color:var(--muted);font-size:14px;line-height:1.85}
+
+/* Quick cards */
+.quick-links{
+  padding:3rem 0;border-top:.5px solid var(--border);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+}
+.quick-card{
+  background:var(--surface);border:.5px solid var(--border);
+  border-radius:10px;padding:1.5rem;cursor:pointer;
+  transition:border-color .2s,transform .2s;
+  display:flex;flex-direction:column;gap:.75rem;
+}
+.quick-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.quick-num{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.1em}
+.quick-title{font-family:var(--heading);font-size:1.4rem;font-weight:400;color:var(--text)}
+.quick-desc{font-size:12px;color:var(--muted)}
+.quick-arrow{margin-top:auto;font-family:var(--mono);font-size:16px;color:var(--accent)}
+
+/* ═══════════════════════════════════════
+   PAGE 2 — EXPERIENCE
+═══════════════════════════════════════ */
+.exp-page{padding-top:5rem;padding-bottom:5rem}
+.tl-item{
+  display:grid;grid-template-columns:180px 1fr;gap:2rem;
+  padding:2.5rem 0;border-bottom:.5px solid var(--border);
+}
+.tl-item:first-child{border-top:.5px solid var(--border)}
+.tl-date{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em;margin-bottom:.3rem}
+.tl-company{font-size:13px;font-weight:500;color:var(--text);margin-bottom:.2rem}
+.tl-loc{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em}
+.tl-role{font-family:var(--heading);font-size:1.6rem;font-weight:400;color:var(--text);margin-bottom:1rem;line-height:1.2}
+.tl-bullets{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.tl-bullets li{font-size:13px;color:var(--muted);padding-left:1.1rem;position:relative;line-height:1.7}
+.tl-bullets li::before{content:'›';position:absolute;left:0;color:var(--accent);font-size:14px;line-height:1.5}
+.edu-strip{
+  margin-top:3rem;background:var(--surface);border:.5px solid var(--border);
+  border-radius:12px;padding:1.75rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.edu-deg{font-family:var(--heading);font-size:1.3rem;font-weight:400;color:var(--text);margin-bottom:.2rem}
+.edu-uni{font-size:13px;color:var(--muted)}
+.edu-right{text-align:right}
+.edu-cgpa{font-family:var(--heading);font-size:2rem;color:var(--accent);line-height:1}
+.edu-cgpa-label{font-family:var(--mono);font-size:10px;color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.certs-section{margin-top:3rem}
+.certs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.5rem}
+.cert-card{
+  background:var(--surface);border:.5px solid var(--border);
+  border-radius:10px;padding:1.1rem 1.25rem;display:flex;align-items:center;gap:1rem;
+}
+.cert-badge{
+  width:40px;height:40px;border-radius:8px;background:var(--surface2);
+  border:.5px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:12px;color:var(--accent2);font-weight:500;flex-shrink:0;
+}
+.cert-name{font-size:13px;font-weight:500;color:var(--text);line-height:1.4}
+.cert-org{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:3px}
+
+/* ═══════════════════════════════════════
+   PAGE 3 — PROJECTS
+═══════════════════════════════════════ */
+.projects-page{padding-top:5rem;padding-bottom:5rem}
+.proj-featured{
+  background:var(--surface);border:.5px solid rgba(79,201,164,.3);
+  border-radius:14px;padding:2rem;margin-bottom:1.5rem;
+  position:relative;overflow:hidden;
+}
+.proj-featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent)}
+.proj-badge{
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:3px;background:rgba(79,201,164,.12);
+  color:var(--accent);display:inline-block;margin-bottom:1rem;
+}
+.proj-featured-title{font-family:var(--heading);font-size:clamp(1.3rem,4vw,1.6rem);
+  font-weight:400;color:var(--text);margin-bottom:.75rem;line-height:1.2}
+.proj-featured-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:1.25rem}
+.proj-arch{
+  background:var(--surface2);border:.5px solid var(--border);
+  border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.25rem;
+}
+.proj-arch-title{font-family:var(--mono);font-size:10px;color:var(--accent);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.proj-arch-items{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.arch-step{display:flex;align-items:center;gap:.35rem;font-size:12px;color:var(--text)}
+.arch-arrow{color:var(--muted);font-size:11px}
+.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.proj-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:3px;
+  background:var(--surface2);color:var(--muted);border:.5px solid var(--border);letter-spacing:.03em;
+}
+.tag-accent{background:rgba(79,201,164,.08);color:var(--accent);border-color:rgba(79,201,164,.2)}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.proj-card{
+  background:var(--surface);border:.5px solid var(--border);
+  border-radius:12px;padding:1.5rem;position:relative;overflow:hidden;
+  transition:border-color .2s,transform .2s;display:flex;flex-direction:column;
+}
+.proj-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.proj-accent-bar{position:absolute;top:0;left:0;right:0;height:1.5px}
+.proj-card-num{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;margin-bottom:.6rem}
+.proj-card-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:.5rem;line-height:1.4}
+.proj-card-desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:1rem;flex:1}
+.proj-card-footer{margin-top:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.case-study-btn{
+  font-family:var(--mono);font-size:10px;color:var(--muted);
+  border:.5px solid var(--border2);padding:4px 10px;border-radius:3px;
+  text-decoration:none;letter-spacing:.06em;transition:color .2s,border-color .2s;
+}
+.case-study-btn:hover{color:var(--accent);border-color:var(--accent)}
+.proj-note{
+  margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface);
+  border:.5px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted);
+}
+
+/* ═══════════════════════════════════════
+   PAGE 4 — SKILLS
+═══════════════════════════════════════ */
+.skills-page{padding-top:5rem;padding-bottom:5rem}
+.skills-layout{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1rem}
+.skill-section-title{
+  font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:.5px solid var(--border2);
+}
+.skill-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.skill-list li{
+  display:flex;align-items:center;gap:.75rem;font-size:13px;color:var(--text);
+  padding:.5rem 0;border-bottom:.5px solid var(--border);
+}
+.skill-list li:last-child{border-bottom:none}
+.skill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.skill-dot.blue{background:var(--accent2)}.skill-dot.red{background:var(--accent3)}.skill-dot.gold{background:var(--accent4)}
+.skill-full{grid-column:1/-1}
+.skills-cloud{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.s-chip{
+  font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:20px;
+  border:.5px solid var(--border2);color:var(--muted);cursor:default;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.s-chip:hover{color:var(--accent);border-color:var(--accent);background:rgba(79,201,164,.06)}
+
+/* ═══════════════════════════════════════
+   PAGE 5 — CONTACT
+═══════════════════════════════════════ */
+.contact-page{
+  padding-top:5rem;padding-bottom:5rem;
+  min-height:calc(100vh - var(--nav-h));
+  display:flex;flex-direction:column;justify-content:center;
+}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:1rem}
+.contact-tagline{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:2rem}
+.contact-items{display:flex;flex-direction:column;gap:1rem}
+.contact-item{
+  display:flex;align-items:center;gap:1rem;padding:.85rem 1rem;
+  background:var(--surface);border:.5px solid var(--border);border-radius:8px;
+  text-decoration:none;transition:border-color .2s;
+}
+.contact-item:hover{border-color:var(--border2)}
+.contact-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0}
+.contact-label{font-size:10px;color:var(--muted);font-family:var(--mono);letter-spacing:.06em}
+.contact-value{font-size:13px;color:var(--text);margin-top:1px}
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-field label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.form-field input,.form-field textarea,.form-field select{
+  background:var(--surface);border:.5px solid var(--border2);border-radius:6px;
+  padding:10px 14px;color:var(--text);font-family:var(--body);font-size:13px;
+  outline:none;transition:border-color .2s;width:100%;-webkit-appearance:none;
+}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--accent)}
+.form-field textarea{resize:vertical;min-height:100px}
+.form-submit{
+  font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding:12px;
+  border-radius:6px;border:.5px solid var(--accent);color:var(--accent);
+  background:transparent;cursor:pointer;width:100%;transition:background .2s,color .2s;
+}
+.form-submit:hover{background:var(--accent);color:#0d0f14}
+.availability-badge{
+  display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;
+  color:var(--accent);padding:5px 12px;border:.5px solid rgba(79,201,164,.3);
+  border-radius:20px;margin-bottom:1.5rem;background:rgba(79,201,164,.06);
+}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;padding:1.5rem;font-family:var(--mono);font-size:10px;
+  color:var(--muted);border-top:.5px solid var(--border);
+  position:relative;z-index:1;letter-spacing:.06em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .55s ease both}
+.fade-up-1{animation-delay:.1s}.fade-up-2{animation-delay:.2s}
+.fade-up-3{animation-delay:.3s}.fade-up-4{animation-delay:.4s}.fade-up-5{animation-delay:.5s}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — TABLET (≤768px)
+═══════════════════════════════════════ */
+@media(max-width:768px){
+  /* Nav */
+  nav{padding:0 1.25rem}
+  .logo-text{display:none}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+
+  /* Page content */
+  .page-content{padding-left:1.25rem;padding-right:1.25rem}
+
+  /* Hero */
+  .hero{padding-top:3rem;padding-bottom:3rem;min-height:calc(100svh - var(--nav-h))}
+  .hero-shape{display:none}
+  .hero-eyebrow{margin-bottom:1.25rem;font-size:11px}
+  .hero-sub{font-size:15px;margin-bottom:2rem}
+  .hero-actions{flex-direction:column;gap:.75rem;margin-bottom:3rem}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .stats-bar{grid-template-columns:repeat(2,1fr);max-width:100%}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(1),.stat:nth-child(2){border-bottom:.5px solid var(--border)}
+
+  /* About */
+  .about-strip{grid-template-columns:1fr;gap:2rem;padding:3rem 0}
+  .quick-links{grid-template-columns:1fr;padding:2rem 0}
+
+  /* Experience */
+  .exp-page{padding-top:3rem;padding-bottom:3rem}
+  .tl-item{grid-template-columns:1fr;gap:1rem;padding:2rem 0}
+  .certs-grid{grid-template-columns:1fr}
+
+  /* Projects */
+  .projects-page{padding-top:3rem;padding-bottom:3rem}
+  .proj-featured{padding:1.5rem}
+  .arch-grid{grid-template-columns:1fr}
+  .proj-grid{grid-template-columns:1fr}
+
+  /* Skills */
+  .skills-page{padding-top:3rem;padding-bottom:3rem}
+  .skills-layout{grid-template-columns:1fr}
+  .skill-full{grid-column:auto}
+
+  /* Contact */
+  .contact-page{padding-top:3rem;padding-bottom:3rem;justify-content:flex-start}
+  .contact-layout{grid-template-columns:1fr;gap:2.5rem}
+  h2{margin-bottom:1.25rem}
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (≤420px)
+═══════════════════════════════════════ */
+@media(max-width:420px){
+  .page-content{padding-left:1rem;padding-right:1rem}
+  nav{padding:0 1rem}
+  .proj-featured{padding:1.25rem}
+  .stat{padding:.85rem 1rem}
+  .tl-bullets li{font-size:12px}
+  .contact-value{font-size:12px;word-break:break-all}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a class="logo" onclick="showPage('home')">
+    <div class="logo-mark">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="36" height="36" rx="8" fill="#141720"/>
+        <rect width="36" height="36" rx="8" fill="url(#lg)" opacity="0.15"/>
+        <path d="M7 26 L13 10 L16 17 M9.5 21 H14.5" stroke="#4fc9a4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19 10 L19 26 M19 18 L27 10 M19 18 L27 26" stroke="#7b8cff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="5" cy="5" r="1" fill="#4fc9a4" opacity="0.4"/>
+        <circle cx="31" cy="31" r="1" fill="#7b8cff" opacity="0.4"/>
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4fc9a4"/><stop offset="1" stop-color="#7b8cff"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="logo-text"><strong>Anvit Kulkarni</strong>RPA Engineer</div>
+  </a>
+
+  <div class="nav-links">
+    <button onclick="showPage('home')" id="nav-home" class="active">Home</button>
+    <button onclick="showPage('experience')" id="nav-experience">Experience</button>
+    <button onclick="showPage('projects')" id="nav-projects">Projects</button>
+    <button onclick="showPage('skills')" id="nav-skills">Skills</button>
+    <button onclick="showPage('contact')" id="nav-contact" class="nav-cta">Contact</button>
+  </div>
+
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="mobile-nav" id="mobile-nav">
+  <button onclick="showPage('home');toggleMenu()" id="mnav-home" class="active">Home</button>
+  <button onclick="showPage('experience');toggleMenu()" id="mnav-experience">Experience</button>
+  <button onclick="showPage('projects');toggleMenu()" id="mnav-projects">Projects</button>
+  <button onclick="showPage('skills');toggleMenu()" id="mnav-skills">Skills</button>
+  <button onclick="showPage('contact');toggleMenu()" id="mnav-contact" class="m-cta">Contact</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE 1: HOME
+═══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+<div class="page-content" style="position:relative">
+  <div class="hero">
+    <div class="hero-eyebrow fade-up fade-up-1">RPA &amp; Automation Engineer</div>
+    <div class="hero-name fade-up fade-up-2"><h1>Anvit<br><em>Kulkarni</em></h1></div>
+    <p class="hero-sub fade-up fade-up-3">I build intelligent automation solutions that transform repetitive business processes into seamless, unattended workflows — using Microsoft Power Platform at enterprise scale.</p>
+    <div class="hero-actions fade-up fade-up-4">
+      <button class="btn" onclick="showPage('projects')">View Projects →</button>
+      <button class="btn btn-ghost" onclick="showPage('experience')">My Experience</button>
+      <button class="btn btn-ghost" onclick="showPage('contact')">Get In Touch</button>
+    </div>
+    <div class="stats-bar fade-up fade-up-5">
+      <div class="stat"><div class="stat-num">1+</div><div class="stat-label">Yrs Exp.</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Projects</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">MS Certs</div></div>
+      <div class="stat"><div class="stat-num">8.4</div><div class="stat-label">CGPA</div></div>
+    </div>
+    <!-- decorative circle, hidden on mobile via CSS -->
+    <div class="hero-shape">
+      <div class="hero-shape-inner">
+        <div class="hero-shape-inner2"><span class="hero-initials">AK</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-strip">
+    <div class="about-block">
+      <h3>Who I Am</h3>
+      <p>A results-driven RPA/Automation Engineer at Tata Consultancy Services, Gandhinagar, specialising in end-to-end automation with Microsoft Power Platform. I bridge the gap between enterprise systems — making data flow without human intervention.</p>
+    </div>
+    <div class="about-block">
+      <h3>What I Do</h3>
+      <p>From cloud flow orchestration and unattended desktop automation to multi-bot architectures and database integrations — I design, build, and maintain automation that scales reliably across business environments.</p>
+    </div>
+  </div>
+
+  <div class="quick-links">
+    <div class="quick-card" onclick="showPage('experience')">
+      <div class="quick-num">01 /</div>
+      <div class="quick-title">Experience</div>
+      <div class="quick-desc">TCS · Gandhinagar · Aug 2024–Present</div>
+      <div class="quick-arrow">→</div>
+    </div>
+    <div class="quick-card" onclick="showPage('projects')">
+      <div class="quick-num">02 /</div>
+      <div class="quick-title">Projects</div>
+      <div class="quick-desc">7 enterprise automation solutions</div>
+      <div class="quick-arrow">→</div>
+    </div>
+    <div class="quick-card" onclick="showPage('skills')">
+      <div class="quick-num">03 /</div>
+      <div class="quick-title">Skills</div>
+      <div class="quick-desc">Power Platform · RPA · Dataverse</div>
+      <div class="quick-arrow">→</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE 2: EXPERIENCE
+═══════════════════════════════════════ -->
+<div class="page" id="page-experience">
+<div class="page-content exp-page">
+  <div class="sec-tag">02 / Experience</div>
+  <h2>Where I've<br>Worked</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-date">Aug 2024 — Present</div>
+        <div class="tl-company">Tata Consultancy Services</div>
+        <div class="tl-loc">Gandhinagar, India</div>
+      </div>
+      <div class="tl-right">
+        <div class="tl-role">Assistant System<br>Engineer</div>
+        <ul class="tl-bullets">
+          <li>Developed and maintained enterprise RPA automation solutions using Power Automate Desktop, significantly reducing manual effort across business departments.</li>
+          <li>Designed and implemented Power Automate Cloud flows integrating Outlook, SharePoint, Excel, and external APIs to automate cross-platform workflows end-to-end.</li>
+          <li>Built multi-bot architectures enabling parallel execution of desktop flows across multiple machines, improving throughput and scalability.</li>
+          <li>Integrated Dataverse for structured log storage and flow monitoring across cloud workflows.</li>
+          <li>Implemented Appian-to-Power Automate bridges using HTTP payloads for real-time work queue population — enabling seamless cross-platform data transfer.</li>
+          <li>Built robust exception handling, logging, and debugging frameworks ensuring high reliability and minimal downtime across all automations.</li>
+          <li>Collaborated with business stakeholders and client teams to gather requirements, analyse existing workflows, and deliver aligned solutions on time.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="certs-section">
+    <div class="skill-section-title">Education</div>
+    <div class="edu-strip">
+      <div class="edu-left">
+        <div class="edu-deg">B.Tech in Information Technology</div>
+        <div class="edu-uni">JSPM Rajarshi Shahu College of Engineering, Pune</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px">Graduated June 2024</div>
+      </div>
+      <div class="edu-right">
+        <div class="edu-cgpa">8.4</div>
+        <div class="edu-cgpa-label">CGPA / 10.0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="certs-section">
+    <div class="skill-section-title">Certifications</div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-badge">MS</div>
+        <div><div class="cert-name">Power Automate RPA Developer Associate</div><div class="cert-org">Microsoft · PL-500</div></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">MS</div>
+        <div><div class="cert-name">Power Platform Fundamentals</div><div class="cert-org">Microsoft · PL-900</div></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge" style="color:var(--accent4)">SI</div>
+        <div><div class="cert-name">Internship Certificate</div><div class="cert-org">Siemens</div></div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge" style="color:var(--accent3)">FB</div>
+        <div><div class="cert-name">Training Completion Certificate</div><div class="cert-org">Firstbit</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE 3: PROJECTS
+═══════════════════════════════════════ -->
+<div class="page" id="page-projects">
+<div class="page-content projects-page">
+  <div class="sec-tag">03 / Projects</div>
+  <h2>What I've<br>Built</h2>
+
+  <div class="proj-featured">
+    <div class="proj-badge">🔴 Current Project</div>
+    <div class="proj-featured-title">RHS One-Step — Right Hand Side Automation</div>
+    <div class="proj-featured-desc">A sophisticated end-to-end automation spanning Appian, Power Automate Cloud, Power Automate Desktop, Excel, and Dataverse. Uses an HTTP payload bridge to transfer data from Appian into work queues, runs multi-bot parallel processing, executes database CRUD operations, triggers Excel macros, and stores comprehensive logs in Dataverse.</div>
+    <div class="proj-arch">
+      <div class="proj-arch-title">Architecture Flow</div>
+      <div class="proj-arch-items">
+        <span class="arch-step">🟦 Appian</span><span class="arch-arrow">→</span>
+        <span class="arch-step">☁️ Queue Bridge Dispatcher</span><span class="arch-arrow">→</span>
+        <span class="arch-step">📋 PA Work Queue</span><span class="arch-arrow">→</span>
+        <span class="arch-step">🖥️ Desktop Flow</span><span class="arch-arrow">→</span>
+        <span class="arch-step">🗄️ Dataverse Logs</span>
+      </div>
+    </div>
+    <div class="arch-grid">
+      <div class="proj-arch" style="margin-bottom:0">
+        <div class="proj-arch-title">Cloud Flow 1 — Queue Bridge Dispatcher</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">Acts as a bridge between Appian and Power Automate via HTTP payload. Receives incoming data and directly populates the PA Work Queue for structured downstream processing.</div>
+      </div>
+      <div class="proj-arch" style="margin-bottom:0">
+        <div class="proj-arch-title">Desktop Flow — Queue Processor</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">Processes each work queue item with multi-layer data validation, runs CREATE / READ / UPDATE queries against the database, executes Excel macros, and updates Excel reports.</div>
+      </div>
+      <div class="proj-arch" style="margin-bottom:0;grid-column:1/-1">
+        <div class="proj-arch-title">Cloud Flow 2 — RHS Queue Pulse Performer</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">Implements multi-bot architecture — orchestrates parallel execution of desktop flows across multiple machines. Stores all flow logs in Dataverse for monitoring and auditing.</div>
+      </div>
+    </div>
+    <div style="height:1.25rem"></div>
+    <div class="proj-footer">
+      <div class="proj-tags">
+        <span class="tag tag-accent">Power Automate Cloud</span>
+        <span class="tag tag-accent">Power Automate Desktop</span>
+        <span class="tag tag-accent">Dataverse</span>
+        <span class="tag">Excel Automation</span>
+        <span class="tag">HTTP Payload</span>
+        <span class="tag">Multi-Bot</span>
+        <span class="tag">Appian</span>
+        <span class="tag">DB CRUD</span>
+      </div>
+      <a href="mailto:kulkarnianvit423@gmail.com?subject=RHS One-Step Project Inquiry" class="btn btn-sm">Request Case Study →</a>
+    </div>
+  </div>
+
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="proj-accent-bar" style="background:var(--accent)"></div>
+      <div class="proj-card-num">02 /</div>
+      <div class="proj-card-title">GMP – Contract Setup in Mosaic</div>
+      <div class="proj-card-desc">Automated contract data pipeline — extracting from Outlook, validating against LIMS portal via multi-layer Excel checks, queueing records, and distributing reports. Fully unattended daily.</div>
+      <div class="proj-card-footer">
+        <div class="proj-tags"><span class="tag">PAD</span><span class="tag">SharePoint</span><span class="tag">Excel</span><span class="tag">LIMS</span></div>
+        <a href="mailto:kulkarnianvit423@gmail.com?subject=GMP Project Inquiry" class="case-study-btn">Request details →</a>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-accent-bar" style="background:var(--accent2)"></div>
+      <div class="proj-card-num">03 /</div>
+      <div class="proj-card-title">Finance – Study Setup in Mosaic</div>
+      <div class="proj-card-desc">End-to-end web automation on Mosaic portal — loading SharePoint data as JSON work queue, validating each item, and auto-submitting contracts with dynamic UI handling. Fully unattended.</div>
+      <div class="proj-card-footer">
+        <div class="proj-tags"><span class="tag">PAD</span><span class="tag">JSON</span><span class="tag">Web Auto</span><span class="tag">Mosaic</span></div>
+        <a href="mailto:kulkarnianvit423@gmail.com?subject=Finance Project Inquiry" class="case-study-btn">Request details →</a>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-accent-bar" style="background:var(--accent3)"></div>
+      <div class="proj-card-num">04 /</div>
+      <div class="proj-card-title">AUM12 – LIMS Data Validation</div>
+      <div class="proj-card-desc">Multi-layer validation pipeline for LIMS project files from Outlook, cross-referenced against multiple SharePoint Excel files before queueing and automated report distribution.</div>
+      <div class="proj-card-footer">
+        <div class="proj-tags"><span class="tag">PAD</span><span class="tag">LIMS</span><span class="tag">Excel</span><span class="tag">Outlook</span></div>
+        <a href="mailto:kulkarnianvit423@gmail.com?subject=AUM12 Project Inquiry" class="case-study-btn">Request details →</a>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-accent-bar" style="background:var(--accent4)"></div>
+      <div class="proj-card-num">05 /</div>
+      <div class="proj-card-title">Gilead IMP Shipment Form</div>
+      <div class="proj-card-desc">Integrated external APIs via web services, validated records using Snowflake queries, and auto-populated shipment forms with verified data. Completed forms distributed automatically.</div>
+      <div class="proj-card-footer">
+        <div class="proj-tags"><span class="tag">API</span><span class="tag">Snowflake</span><span class="tag">PAD</span><span class="tag">SharePoint</span></div>
+        <a href="mailto:kulkarnianvit423@gmail.com?subject=Gilead Project Inquiry" class="case-study-btn">Request details →</a>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-accent-bar" style="background:var(--accent)"></div>
+      <div class="proj-card-num">06 /</div>
+      <div class="proj-card-title">Web-Based Code Forum</div>
+      <div class="proj-card-desc">Internal knowledge-sharing platform built with Power Apps and SharePoint as backend. Power Automate handles post tagging, categorization, and real-time notifications.</div>
+      <div class="proj-card-footer">
+        <div class="proj-tags"><span class="tag">Power Apps</span><span class="tag">Python</span><span class="tag">SharePoint</span></div>
+        <a href="mailto:kulkarnianvit423@gmail.com?subject=Code Forum Project" class="case-study-btn">Request details →</a>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-accent-bar" style="background:var(--accent2)"></div>
+      <div class="proj-card-num">07 /</div>
+      <div class="proj-card-title">Web Data Scraper</div>
+      <div class="proj-card-desc">Automated web scraping using Power Automate Desktop, orchestrated via scheduled Cloud flows. Daily/weekly unattended data collection with alerting — zero manual effort.</div>
+      <div class="proj-card-footer">
+        <div class="proj-tags"><span class="tag">PAD</span><span class="tag">Cloud Flow</span><span class="tag">Web Scraping</span></div>
+        <a href="mailto:kulkarnianvit423@gmail.com?subject=Web Scraper Project" class="case-study-btn">Request details →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="proj-note">
+    <span style="color:var(--accent);font-family:var(--mono)">ℹ</span>&nbsp; All projects are proprietary client work on company infrastructure. Detailed case studies, architecture diagrams, and walkthroughs available on request.
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE 4: SKILLS
+═══════════════════════════════════════ -->
+<div class="page" id="page-skills">
+<div class="page-content skills-page">
+  <div class="sec-tag">04 / Skills</div>
+  <h2>Tools &amp;<br>Technologies</h2>
+  <div class="skills-layout">
+    <div>
+      <div class="skill-section-title">Microsoft Power Platform</div>
+      <ul class="skill-list">
+        <li><span class="skill-dot"></span>Power Automate Cloud</li>
+        <li><span class="skill-dot"></span>Power Automate Desktop</li>
+        <li><span class="skill-dot"></span>Power Apps</li>
+        <li><span class="skill-dot"></span>Dataverse</li>
+      </ul>
+    </div>
+    <div>
+      <div class="skill-section-title">Automation Expertise</div>
+      <ul class="skill-list">
+        <li><span class="skill-dot blue"></span>Robotic Process Automation</li>
+        <li><span class="skill-dot blue"></span>Unattended Automation</li>
+        <li><span class="skill-dot blue"></span>Multi-Bot Architecture</li>
+        <li><span class="skill-dot blue"></span>Web Automation</li>
+        <li><span class="skill-dot blue"></span>Web Scraping</li>
+        <li><span class="skill-dot blue"></span>Work Queue Management</li>
+      </ul>
+    </div>
+    <div>
+      <div class="skill-section-title">Tools &amp; Integrations</div>
+      <ul class="skill-list">
+        <li><span class="skill-dot gold"></span>SharePoint</li>
+        <li><span class="skill-dot gold"></span>Microsoft Excel (incl. Macros)</li>
+        <li><span class="skill-dot gold"></span>Outlook</li>
+        <li><span class="skill-dot gold"></span>Snowflake</li>
+        <li><span class="skill-dot gold"></span>JSON &amp; REST API Integration</li>
+        <li><span class="skill-dot gold"></span>Appian (HTTP Payload bridge)</li>
+      </ul>
+    </div>
+    <div>
+      <div class="skill-section-title">Engineering Practices</div>
+      <ul class="skill-list">
+        <li><span class="skill-dot red"></span>Exception Handling &amp; Logging</li>
+        <li><span class="skill-dot red"></span>Data Validation (multi-layer)</li>
+        <li><span class="skill-dot red"></span>Database CRUD Operations</li>
+        <li><span class="skill-dot red"></span>Workflow Optimisation</li>
+        <li><span class="skill-dot red"></span>Cross-functional Collaboration</li>
+      </ul>
+    </div>
+    <div class="skill-full">
+      <div class="skill-section-title">All Technologies</div>
+      <div class="skills-cloud">
+        <span class="s-chip">Power Automate Cloud</span><span class="s-chip">Power Automate Desktop</span>
+        <span class="s-chip">Power Apps</span><span class="s-chip">Dataverse</span>
+        <span class="s-chip">SharePoint</span><span class="s-chip">Excel Automation</span>
+        <span class="s-chip">Excel Macros</span><span class="s-chip">Outlook</span>
+        <span class="s-chip">JSON</span><span class="s-chip">REST APIs</span>
+        <span class="s-chip">HTTP Payload</span><span class="s-chip">Appian</span>
+        <span class="s-chip">Snowflake</span><span class="s-chip">Work Queues</span>
+        <span class="s-chip">Multi-Bot Architecture</span><span class="s-chip">Unattended Automation</span>
+        <span class="s-chip">Web Scraping</span><span class="s-chip">Database Integration</span>
+        <span class="s-chip">Exception Handling</span><span class="s-chip">Data Validation</span>
+        <span class="s-chip">Python</span><span class="s-chip">LIMS Portal</span><span class="s-chip">Mosaic Portal</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PAGE 5: CONTACT
+═══════════════════════════════════════ -->
+<div class="page" id="page-contact">
+<div class="page-content contact-page">
+  <div class="sec-tag">05 / Contact</div>
+  <div class="contact-layout">
+    <div class="contact-left">
+      <div class="availability-badge"><span class="avail-dot"></span>Open to opportunities</div>
+      <h2>Let's Work<br><em>Together</em></h2>
+      <p class="contact-tagline">Whether you're looking for an RPA developer, want to discuss automation solutions, or just want to connect — feel free to reach out.</p>
+      <div class="contact-items">
+        <a href="mailto:kulkarnianvit423@gmail.com" class="contact-item">
+          <div class="contact-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg></div>
+          <div><div class="contact-label">Email</div><div class="contact-value">kulkarnianvit423@gmail.com</div></div>
+        </a>
+        <a href="tel:+918308371366" class="contact-item">
+          <div class="contact-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6.5 3h-2A1.5 1.5 0 0 0 3 4.5v1C3 14.06 9.94 21 18.5 21h1A1.5 1.5 0 0 0 21 19.5v-2a1.5 1.5 0 0 0-1.5-1.5h-2a1.5 1.5 0 0 0-1.5 1.5v.793c-3.06-.553-5.74-3.233-6.293-6.293H10.5A1.5 1.5 0 0 0 12 10.5v-2A1.5 1.5 0 0 0 10.5 7H8A1.5 1.5 0 0 0 6.5 8.5Z"/></svg></div>
+          <div><div class="contact-label">Phone</div><div class="contact-value">+91 83083 71366</div></div>
+        </a>
+        <a href="#" class="contact-item">
+          <div class="contact-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div><div class="contact-label">LinkedIn</div><div class="contact-value">linkedin.com/in/anvit-kulkarni</div></div>
+        </a>
+        <div class="contact-item" style="cursor:default">
+          <div class="contact-icon"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <div><div class="contact-label">Location</div><div class="contact-value">Satara, Maharashtra, India</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <div class="skill-section-title" style="margin-bottom:1.25rem">Send a Message</div>
+      <div class="contact-form" id="contact-form">
+        <div class="form-field">
+          <label>Your Name</label>
+          <input type="text" id="from_name">
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" id="from_email">
+        </div>
+        <div class="form-field">
+          <label>Subject</label>
+          <select id="subject">
+            <option>Job Opportunity</option>
+            <option>Project Collaboration</option>
+            <option>Case Study Request</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Message</label>
+          <textarea id="message" placeholder="Tell me about the opportunity or what you'd like to discuss..."></textarea>
+        </div>
+        <div id="form-status" style="font-family:var(--mono);font-size:12px;text-align:center;display:none;padding:8px;border-radius:6px"></div>
+        <button class="form-submit" id="submit-btn" onclick="handleFormSubmit()">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>© 2025 Anvit Kulkarni · Automating What Slows You Down</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+// ── EmailJS setup ──
+// STEP 1: https://www.emailjs.com → free account
+// STEP 2: Add Gmail service → copy Service ID
+// STEP 3: Create template with {{from_name}} {{from_email}} {{subject}} {{message}}
+//         Set "To Email" to: kulkarnianvit423@gmail.com
+// STEP 4: Account → API Keys → copy Public Key
+const EMAILJS_PUBLIC_KEY  = 'FvWfWsnEfMGOdrTkQ';
+const EMAILJS_SERVICE_ID  = 'service_r6suujb';
+const EMAILJS_TEMPLATE_ID = 'template_mlp00zl';
+
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button, .mobile-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const btn = document.getElementById('nav-' + name);
+  if (btn) btn.classList.add('active');
+  const mbtn = document.getElementById('mnav-' + name);
+  if (mbtn) mbtn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggleMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+}
+
+function showStatus(msg, isError) {
+  const el = document.getElementById('form-status');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.style.background = isError ? 'rgba(255,123,123,0.1)' : 'rgba(79,201,164,0.1)';
+  el.style.color = isError ? 'var(--accent3)' : 'var(--accent)';
+  el.style.border = isError ? '0.5px solid rgba(255,123,123,0.3)' : '0.5px solid rgba(79,201,164,0.3)';
+}
+
+async function handleFormSubmit() {
+  const name    = document.getElementById('from_name').value.trim();
+  const email   = document.getElementById('from_email').value.trim();
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value.trim();
+  const btn     = document.getElementById('submit-btn');
+
+  if (!name || !email || !message) { showStatus('⚠ Please fill in your name, email and message.', true); return; }
+  if (!/\S+@\S+\.\S+/.test(email)) { showStatus('⚠ Please enter a valid email address.', true); return; }
+  if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') { showStatus('⚠ EmailJS not configured yet — see HTML source comments.', true); return; }
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name: name, from_email: email, subject, message,
+      to_email: 'kulkarnianvit423@gmail.com'
+    });
+    showStatus("✓ Message sent! I'll get back to you soon.", false);
+    document.getElementById('from_name').value = '';
+    document.getElementById('from_email').value = '';
+    document.getElementById('message').value = '';
+  } catch(err) {
+    showStatus('✗ Something went wrong. Please email me directly.', true);
+  }
+  btn.textContent = 'Send Message →';
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>
